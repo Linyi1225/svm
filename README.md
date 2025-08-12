@@ -57,20 +57,34 @@ accuracy = svm.score(X_test, y_test)
 from svm import GaussianSVM
 from svm.datasets import generate_ad_detection_data
 from svm.visualizer import plot_decision_boundary
+from sklearn.model_selection import train_test_split
 
 # 生成广告检测数据
 X, y = generate_ad_detection_data(n_samples=300)
 
-# 训练模型
-svm = GaussianSVM(C=5.0, gamma=0.8)
-svm.fit(X, y)
+# 划分训练集和测试集
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42, stratify=y
+)
+
+# 训练模型 - 使用优化后的参数
+svm = GaussianSVM(C=1.0, gamma=0.5)
+svm.fit(X_train, y_train)
+
+# 评估性能
+train_acc = svm.score(X_train, y_train)
+test_acc = svm.score(X_test, y_test)
+
+print(f"训练准确率: {train_acc:.3f}")
+print(f"测试准确率: {test_acc:.3f}")
 
 # 可视化结果
-plot_decision_boundary(svm, X, y)
-print(f"准确率: {svm.score(X, y):.3f}")
+plot_decision_boundary(svm, X_train, y_train)
+
+# 获取详细报告
+report = svm.get_classification_report(X_test, y_test)
+print(f"F1分数: {report['f1_score']:.3f}")
 ```
-
-
 ## 🎯 实战案例：广告检测
 
 我们用4个特征来识别广告和正常内容：
