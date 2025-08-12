@@ -159,9 +159,9 @@ svm/
 │   ├── visualizer.py        # 可视化工具
 │   └── datasets.py          # 数据生成器
 ├── examples/
-│   ├── basic_usage.py       # 基础使用示例
+│   ├── test.py       # 基础使用示例
 │   ├── ad_detection.py      # 广告检测完整示例
-│   └── sklearn_comparison.py # 与sklearn性能对比
+│   
 ├── docs/
 │   ├── algorithm.md         # 算法详细原理
 │   └── images/             # 文档图片
