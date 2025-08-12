@@ -2,7 +2,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.7+-blue.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/yourusername/gaussian-svm-from-scratch.svg)](https://github.com/yourusername/gaussian-svm-from-scratch/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/Linyi1225/svm.svg)](https://github.com/Linyi1225/svm/stargazers)
 
 > 纯Python实现的高斯核支持向量机，让你真正理解SVM算法原理，而不是只会调用sklearn！
 
@@ -27,8 +27,8 @@
 ### 安装
 
 ```bash
-git clone https://github.com/yourusername/gaussian-svm-from-scratch.git
-cd gaussian-svm-from-scratch
+git clone https://github.com/Linyi1225/svm.git
+cd svm
 pip install -r requirements.txt
 ```
 
@@ -152,7 +152,7 @@ class GaussianSVM:
 ## 📁 项目结构
 
 ```
-gaussian-svm-from-scratch/
+svm/
 ├── svm/
 │   ├── __init__.py           # 包初始化
 │   ├── core.py              # GaussianSVM核心实现
@@ -195,5 +195,6 @@ gaussian-svm-from-scratch/
 - 感谢《统计学习方法》提供的理论基础
 - 感谢所有为开源社区贡献的开发者
 
+---
 
 ⭐ 如果这个项目对你有帮助，请给个Star支持一下！
