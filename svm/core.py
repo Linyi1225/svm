@@ -5,7 +5,7 @@ Gaussian SVM核心实现
 
 import numpy as np
 import time
-from typing import Optional, Dict, List, Tuple
+from typing import Optional, Dict, List, Tuple, Union
 
 class GaussianSVM:
     """
@@ -32,17 +32,21 @@ class GaussianSVM:
         self.training_time = 0
         self.training_history: List[Dict] = []
         
-    def gaussian_kernel(self, x1: np.ndarray, x2: np.ndarray) -> np.ndarray:
+    def gaussian_kernel(self, x1: Union[np.ndarray, list], x2: Union[np.ndarray, list]) -> np.ndarray:
         """
         高斯核函数: K(x1, x2) = exp(-gamma * ||x1 - x2||^2)
         
         Args:
-            x1: 输入数据1
-            x2: 输入数据2
+            x1: 输入数据1，可以是列表或numpy数组
+            x2: 输入数据2，可以是列表或numpy数组
             
         Returns:
             核矩阵
         """
+        # 确保输入是numpy数组
+        x1 = np.asarray(x1)
+        x2 = np.asarray(x2)
+        
         if x1.ndim == 1:
             x1 = x1.reshape(1, -1)
         if x2.ndim == 1:
@@ -193,29 +197,32 @@ class GaussianSVM:
             
         return best_j
 
-    def decision_function(self, X: np.ndarray) -> np.ndarray:
+    def decision_function(self, X: Union[np.ndarray, list]) -> np.ndarray:
         """计算决策函数值"""
+        X = np.asarray(X)  # 确保输入是numpy数组
         K_test = self.gaussian_kernel(X, self.X)
         return np.sum(self.alpha * self.y * K_test, axis=1) + self.b
 
-    def predict(self, X: np.ndarray) -> np.ndarray:
+    def predict(self, X: Union[np.ndarray, list]) -> np.ndarray:
         """预测类别"""
         return np.sign(self.decision_function(X))
 
-    def predict_proba(self, X: np.ndarray) -> np.ndarray:
+    def predict_proba(self, X: Union[np.ndarray, list]) -> np.ndarray:
         """预测概率"""
         decision_scores = self.decision_function(X)
         probabilities = 1 / (1 + np.exp(-decision_scores))
         return np.column_stack([1 - probabilities, probabilities])
 
-    def score(self, X: np.ndarray, y: np.ndarray) -> float:
+    def score(self, X: Union[np.ndarray, list], y: Union[np.ndarray, list]) -> float:
         """计算准确率"""
         predictions = self.predict(X)
+        y = np.asarray(y)  # 确保y也是numpy数组
         return np.mean(predictions == y)
     
-    def get_classification_report(self, X: np.ndarray, y: np.ndarray) -> Dict:
+    def get_classification_report(self, X: Union[np.ndarray, list], y: Union[np.ndarray, list]) -> Dict:
         """获取详细的分类报告"""
         predictions = self.predict(X)
+        y = np.asarray(y)  # 确保y是numpy数组
         
         tp = np.sum((predictions == 1) & (y == 1))
         tn = np.sum((predictions == -1) & (y == -1))
